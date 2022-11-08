@@ -30,7 +30,7 @@ class TasksServices {
 
   static async updateTask(id, isComplete) {
     try {
-      const result = await Tasks.update(isComplete, { where: id });
+      const result = await Tasks.update(isComplete, { where: { id } });
       return result;
     } catch (error) {
       throw error;
