@@ -32,9 +32,9 @@ const deleteTask = async (req, res) => {
 const putTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const {isComplete} = req.body;
+    const isComplete = req.body;
     const result = await TaskServices.updateTask(id, isComplete);
-    res.end();
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
   }
