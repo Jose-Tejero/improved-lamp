@@ -3,10 +3,11 @@ const initModels = require('./models/initModels');
 const db = require('./utils/database');
 const userRoutes = require('./routes/users.routes');
 const taskRoutes = require('./routes/tasks.routes');
+require('dotenv').config();
 
 const app = express();
 
-const PORT = 8000;
+const PORT = process.env.PORT;
 
 db.authenticate()
   .then(() => console.log("Autenticación exitosa"))
