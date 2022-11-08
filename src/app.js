@@ -13,7 +13,7 @@ db.authenticate()
   .then(() => console.log("Autenticación exitosa"))
   .catch((error) => console.log(error));
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => console.log("Base sincronizada"))
   .catch((error) => console.log(error));
 
