@@ -3,7 +3,7 @@ const Tasks = require("../models/tasks.models");
 class TasksServices {
   static async getAll() {
     try {
-      const result = await Tasks.findAll();
+      const result = await Tasks.findAll({ attributes: ['title', 'description', 'isComplete', 'userId'] });
       return result;
     } catch (error) {
       throw error;
@@ -21,8 +21,7 @@ class TasksServices {
 
   static async deleteOne(id) {
     try {
-      const result = await Tasks.findByPk(id);
-      await result.destroy();
+      return await Tasks.destroy({ where: { id } });
     } catch (error) {
       throw error;
     }
