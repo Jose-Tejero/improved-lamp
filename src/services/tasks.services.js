@@ -10,6 +10,15 @@ class TasksServices {
     }
   };
 
+  static async getById(userId) {
+    try {
+      const result = await Tasks.findAll({ where: { userId } });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   static async postOne(newTask) {
     try {
       const result = await Tasks.create(newTask);

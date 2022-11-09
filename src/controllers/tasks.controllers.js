@@ -9,6 +9,16 @@ const getAllTasks = async (req, res) => {
   }
 };
 
+const getTaskByUserId = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const result = await TaskServices.getById(userId);
+    res.status(200).json(result);
+  } catch (error) {
+    next({ message: 'no existe tarea para este id', status: 400, errorContent: error });
+  }
+};
+
 const postTask = async (req, res) => {
   try {
     const newTask = req.body;
@@ -45,4 +55,5 @@ module.exports = {
   postTask,
   deleteTask,
   putTask,
+  getTaskByUserId,
 }

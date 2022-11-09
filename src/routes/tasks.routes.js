@@ -1,9 +1,11 @@
 const { Router } = require('express');
-const { getAllTasks, postTask, deleteTask, putTask } = require('../controllers/tasks.controllers');
+const { getAllTasks, postTask, deleteTask, putTask, getTaskByUserId } = require('../controllers/tasks.controllers');
 
 const router = Router();
 
-router.get('/tasks', getAllTasks);
+// router.get('/tasks', getAllTasks); Se comenta para que solo tenga acceso el admin a todas las tareas
+
+router.get('/tasks/:userId', getTaskByUserId);
 
 router.post('/tasks', postTask);
 
