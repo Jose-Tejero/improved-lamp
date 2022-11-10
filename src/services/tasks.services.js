@@ -1,4 +1,5 @@
 const Tasks = require("../models/tasks.models");
+const TasksCategories = require("../models/TasksCategories.models");
 
 class TasksServices {
   static async getAll() {
@@ -19,10 +20,12 @@ class TasksServices {
     }
   };
 
-  static async postOne(newTask) {
+  static async postOne(newTask, categories) {
     try {
       const result = await Tasks.create(newTask);
-      return result;
+      const { id } = result;
+      categories.forEach(async (category) => await TasksCategories.create({ categoryId: category, taskId: id }));
+      return true;
     } catch (error) {
       throw error;
     }

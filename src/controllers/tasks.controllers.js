@@ -15,17 +15,21 @@ const getTaskByUserId = async (req, res, next) => {
     const result = await TaskServices.getById(userId);
     res.status(200).json(result);
   } catch (error) {
-    next({ message: 'no existe tarea para este id', status: 400, errorContent: error });
+    next({ message: 'No hay tareas para este usuario', status: 400, errorContent: error });
   }
 };
 
-const postTask = async (req, res) => {
+const postTask = async (req, res, next) => {
   try {
-    const newTask = req.body;
-    const result = await TaskServices.postOne(newTask);
-    res.end();
+    const { newTask, categories } = req.body;
+    const result = await TaskServices.postOne(newTask, categories);
+    res.status(201).json({ message: 'La tarea ha sido creada' });
   } catch (error) {
-    console.log(error);
+    next({
+      message: 'Algo salió mal al crear la tarea',
+      status: 400,
+      errorContent: error,
+    })
   }
 };
 
