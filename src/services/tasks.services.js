@@ -1,3 +1,4 @@
+const Categories = require("../models/categories.models");
 const Tasks = require("../models/tasks.models");
 const TasksCategories = require("../models/TasksCategories.models");
 
@@ -13,7 +14,20 @@ class TasksServices {
 
   static async getById(userId) {
     try {
-      const result = await Tasks.findAll({ where: { userId } });
+      const result = await Tasks.findAll({
+        where: { userId },
+        attributes: ['id', 'title', 'description', 'isComplete'],
+        include: {
+          model: TasksCategories,
+          as: 'category',
+          attributes: ['categoryId'],
+          include: {
+            model: Categories,
+            as: 'category',
+            attributes: ['name'],
+          }
+        },
+      });
       return result;
     } catch (error) {
       throw error;
