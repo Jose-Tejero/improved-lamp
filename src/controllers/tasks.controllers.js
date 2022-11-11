@@ -43,14 +43,18 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const putTask = async (req, res) => {
+const putTask = async (req, res, next) => {
   try {
     const { id } = req.params;
     const isComplete = req.body;
     const result = await TaskServices.updateTask(id, isComplete);
-    res.status(200).json(result);
+    res.status(200).json({ message: 'Tarea actualizada' });
   } catch (error) {
-    console.log(error);
+    next({
+      message: 'No se ha podido actualizar la tarea',
+      status: 400,
+      error: error,
+    })
   }
 };
 
