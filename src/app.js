@@ -3,6 +3,7 @@ const initModels = require('./models/initModels');
 const db = require('./utils/database');
 const userRoutes = require('./routes/users.routes');
 const taskRoutes = require('./routes/tasks.routes');
+const authRoutes = require('./routes/auth.routes');
 const logs = require('./middlewares/requestLogs');
 const handleError = require('./middlewares/error');
 
@@ -38,7 +39,7 @@ app.get('/',
   },
 );
 
-app.use('/api/v1', userRoutes, taskRoutes);
+app.use('/api/v1', userRoutes, taskRoutes, authRoutes);
 
 app.use(handleError);
 
