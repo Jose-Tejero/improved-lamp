@@ -39,7 +39,7 @@ class TasksServices {
       const result = await Tasks.create(newTask);
       const { id } = result;
       categories.forEach(async (category) => await TasksCategories.create({ categoryId: category, taskId: id }));
-      return true;
+      return result;
     } catch (error) {
       throw error;
     }

@@ -1,13 +1,14 @@
 const AuthService = require('../services/auth.services');
+const jwt = require('jsonwebtoken');
 
 const userLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const result = await AuthService.login(email, password);
-    result ?
-      res.status(200).json({ message: 'Logueado exitosamente' })
-      :
-      res.status(401).json({ message: 'Contraseña inválida' });
+    const data = await AuthService.login(email, password);
+    const userData = { email: data.result.email, username: data.result.username, id: data.result.id }
+    const token = jwt.sign(userData, 'todoemlo', {algorithm: 'HS512'});
+    userData.token = token;
+    res.json(userData);
   } catch (error) {
     next({
       message: 'Algo salió mal con la autenticación',

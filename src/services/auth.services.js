@@ -5,10 +5,13 @@ class AuthService {
   static async login(email, password) {
     try {
       const result = await Users.findOne({
-        where: { email }
+        where: { email },
       });
-      const isValid = bcrypt.compareSync(password, result.password);
-      return isValid;
+      if (result) {
+        const isValid = bcrypt.compareSync(password, result.password);
+        return { isValid, result };
+      }
+      return false;
     } catch (error) {
       throw error;
     }
